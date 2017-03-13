@@ -16,7 +16,7 @@ namespace HtmlRender
             Console.WriteLine(myFirstTag.getTag());
             */
 
-            HtmlTag html = new HtmlTag();
+              HtmlTag html = new HtmlTag();
             HeadTag head1 = new HeadTag();
             HeadTag head2 = new HeadTag();
             BodyTag body = new BodyTag();
