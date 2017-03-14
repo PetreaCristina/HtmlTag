@@ -9,7 +9,7 @@ namespace HtmlRender
 {
     class Element
     {
-        protected Tag parinte;
+        internal Tag parent;
         protected string internalInnerText;
         public string innerText
         {

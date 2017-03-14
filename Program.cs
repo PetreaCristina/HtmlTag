@@ -16,7 +16,7 @@ namespace HtmlRender
             Console.WriteLine(myFirstTag.getTag());
             */
 
-              HtmlTag html = new HtmlTag();
+            HtmlTag html = new HtmlTag();
             HeadTag head1 = new HeadTag();
             HeadTag head2 = new HeadTag();
             BodyTag body = new BodyTag();
@@ -39,9 +39,9 @@ namespace HtmlRender
 
            
            
-            
+            /*
             ATag link = new ATag("http://www.expertnetwork.eu/");
-            link.innerText = "Link catre Expert Network";
+            link.innerText = "Link catre Expert Network";*/
             html.AddChild(body);
             html.AddChild(head1);
             html.AddChild(head2);
@@ -57,29 +57,38 @@ namespace HtmlRender
             div.AddChild(h1);
             div.AddChild(p1);
             p1.AddChild(div2);//ok
-            div.AddChild(link);
+            //div.AddChild(link);
             h1.AddChild(font);
-            body.AddChild(input);
-            input.SetAttribute("type","text");
-            input.SetAttribute("placeholder","Your text here");
-            input.innerText = "Scrie un numar";//nu va fi afisat
-            
+           // body.AddChild(input);
+           // input.SetAttribute("type","text");
+            //input.SetAttribute("placeholder","Your text here");
+           // input.innerText = "Scrie un numar";//nu va fi afisat
+
             // Console.WriteLine(obiectInput.Render());
-    
+
+            StringBuilder textRender = html.Render();
             using (System.IO.StreamWriter outputFile = new System.IO.StreamWriter(@"C:\Users\EXNintern4\Documents\Visual Studio 2015\Projects\HtmlRender\output.html"))
             {
-                outputFile.WriteLine(html.Render());
+                outputFile.WriteLine(textRender);
             }
-            //string path = @"C:\Users\EXNintern4\Documents\Visual Studio 2015\Projects\HtmlRender\output.html";
-            string path = @"C:\Users\EXNintern4\Documents\Visual Studio 2015\Projects\HtmlRender\input.html";
-            // html.Parse(path);
-            List<string> htmlTags = new List<string>();
-            htmlTags=html.Parse(path);
-            for (int i = 0; i < htmlTags.Count; i++)
-            {
-                Console.WriteLine(htmlTags[i]);
-            }
+            Console.WriteLine("---Render---\n");
+            Console.WriteLine(textRender);
 
+
+
+
+
+            Console.WriteLine("---Parse---");
+
+            string path = @"C:\Users\EXNintern4\Documents\Visual Studio 2015\Projects\HtmlRender\output.html";
+
+            // html.Parse(path);
+          
+           Tag parseTag=html.Parse2(path);
+            if (parseTag != null)
+            {
+                Console.WriteLine(parseTag.Render());
+            }
         }
     }
 }

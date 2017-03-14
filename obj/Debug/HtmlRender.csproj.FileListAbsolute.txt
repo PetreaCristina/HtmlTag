@@ -7,3 +7,6 @@ C:\Users\EXNintern4\Documents\Visual Studio 2015\Projects\HtmlRender\HtmlRender\
 C:\Users\EXNintern4\Documents\GitHub\HtmlTag\bin\Debug\HtmlRender.exe.config
 C:\Users\EXNintern4\Documents\GitHub\HtmlTag\obj\Debug\HtmlRender.exe
 C:\Users\EXNintern4\Documents\GitHub\HtmlTag\obj\Debug\HtmlRender.pdb
+C:\Users\EXNintern4\Documents\GitHub\HtmlTag\bin\Debug\HtmlRender.exe
+C:\Users\EXNintern4\Documents\GitHub\HtmlTag\bin\Debug\HtmlRender.pdb
+C:\Users\EXNintern4\Documents\GitHub\HtmlTag\obj\Debug\HtmlRender.csprojResolveAssemblyReference.cache

@@ -10,7 +10,7 @@ namespace HtmlRender
 {
 
 
-    class Tag:Element
+    class Tag : Element
     {
 
         protected TagName internalTagName;
@@ -18,11 +18,16 @@ namespace HtmlRender
         protected List<Element> children;
         protected bool isSelfClosing;
 
-        public bool isSelfClosingg {
+        public bool isSelfClosingg
+        {
             get
-                {
+            {
                 return isSelfClosing;
-                } 
+            }
+            set
+            {
+                isSelfClosing = value;
+            }
         }
         public TagName TagName
         {
@@ -123,16 +128,19 @@ namespace HtmlRender
 
         public void AddChild(Element child)
         {
+            child.parent = this;
+            children.Add(child);
+            /*
             if (isSelfClosing == false)
             {
-                parinte = this;
+                parent = this;
                 children.Add(child);
-                
-            }
+
+            }*/
         }
         public bool AddChild(Element child, int poz)
         {
-          
+
             if (CountChildren() <= poz)
             {
                 children.Insert(poz, child);
@@ -143,8 +151,8 @@ namespace HtmlRender
         }
         public void AddChildren(List<Element> newChildrens)
         {
-            if (isSelfClosing==false)
-            children.AddRange(newChildrens);
+            if (isSelfClosing == false)
+                children.AddRange(newChildrens);
         }
 
         public bool RemoveChild(Element child)
@@ -180,8 +188,8 @@ namespace HtmlRender
             int countTabs = 0;
             return Render(countTabs);
         }
-       
-        public StringBuilder Render(int levelCount=0)
+
+        public StringBuilder Render(int levelCount = 0)
         {
             StringBuilder text = new StringBuilder("");
             for (int i = 0; i < levelCount; ++i)
@@ -199,13 +207,13 @@ namespace HtmlRender
                 text.Append("/");
             text.Append(">");
 
-          
-            if (attributes.Count() != 0 || innerText != null)
-            {
-                text.Append("");
-            }
 
-            if (innerText != null)
+            //if (attributes.Count() != 0 || innerText != null)
+            //{
+            //    text.Append("\n");
+            //}
+            text.Append('\n');
+            if (innerText != "")
             {
                 for (int i = 0; i < levelCount + 1; i++)
                 {
@@ -214,27 +222,30 @@ namespace HtmlRender
                 }
 
                 text.Append(innerText + "\n");
-                
+
             }
-            
+
+
             foreach (var item in children)
             {
                 if (item is Tag)
                 {
+
                     text.Append(((Tag)item).Render(levelCount + 1));
                 }
                 else
                 {
+
                     for (int i = 0; i < levelCount + 1; i++)
                     {
                         text.Append("\t");
                     }
-                    text.Append( item.innerText.ToString());
+                    text.Append(item.innerText.ToString() + '\n');
                 }
-                
+
             }
-    
-            
+
+
             if (this.isSelfClosing == false)
             {
                 for (int i = 0; i < levelCount; i++)
@@ -245,10 +256,10 @@ namespace HtmlRender
 
                 text.Append("</" + internalTagName.ToString() + ">\n");
             }
-           
+
             return text;
-           }
-        
+        }
+
 
         public bool Contains(TagName tg)
         {
@@ -259,7 +270,7 @@ namespace HtmlRender
             }
             return false;
         }
-       
+
     }
 
 }
