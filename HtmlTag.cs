@@ -96,7 +96,6 @@ namespace HtmlRender
                 Tag child;
                 Tag rootTag;
                 readText = File.ReadAllText(path);
-
                 string word;
                 TagName tName;
                 readText = readText.Replace("\n", "");
@@ -104,19 +103,22 @@ namespace HtmlRender
                 readText = readText.Replace("\r", "");
                 int startIndex = readText.IndexOf('<');
                 int endIndex = readText.IndexOf('>');
+                string tagg;
+                string attribut;
+                string[] allAttribut;
+                string key = "";
+                string value = "";
                 word = readText.Substring(startIndex + 1, endIndex - startIndex - 1);
                 TagName.TryParse(word, out tName);
                 rootTag = new Tag(tName);
                 readText = readText.Remove(0, endIndex + 1);
-
                 while (readText != "")
                 {
                     try
                     {
                         startIndex = readText.IndexOf('<');
                         endIndex = readText.IndexOf('>');
-                        word = readText.Substring(startIndex + 1, endIndex - startIndex - 1);
-
+                        word = readText.Substring(startIndex + 1, endIndex - startIndex - 1); 
                         if (word.Contains('/'))
                         {
                             if (word[0].Equals('/'))
@@ -135,34 +137,91 @@ namespace HtmlRender
                             }
                             else
                             {
-                                word = word.TrimStart(' ', '/');
-                                TagName.TryParse(word, out tName);
+                                //word = word.TrimStart(' ', '/');
+
+                                word = word.Substring(startIndex + 1, endIndex - startIndex - 1);
+
+                                int spaceIndex = word.IndexOf(' ');
+                                if (spaceIndex == -1)
+                                {
+                                    tagg = word.Substring(startIndex + 1, endIndex - startIndex - 1);
+                                }
+                                else
+                                {
+                                    tagg = word.Substring(startIndex + 1, spaceIndex - startIndex - 1);
+                                    attribut = word.Substring(spaceIndex + 1, endIndex - spaceIndex - 1);
+                                    allAttribut = attribut.Split('=');
+                                    key = allAttribut[0];
+                                    value = allAttribut[1].Trim('\"');
+                                }
+                                TagName.TryParse(tagg, out tName);
+
+
                                 if (Enum.IsDefined(typeof(TagName), tName))
                                 {
+
                                     child = new Tag(tName);
+                                    if (spaceIndex != -1)
+                                    {
+                                        child.SetAttribute(key, value);
+                                    }
                                     child.isSelfClosingg = true;
                                     rootTag.AddChild(child);
                                     //Console.WriteLine(word);
                                 }
                             }
-                            
+
                         }
 
                         else
-                        {
-                         
-                            TagName.TryParse(word, out tName);
+                        {////////////////////////////////////////////////////////////////////
+                            word = word.Substring(startIndex + 1, endIndex - startIndex - 1);
+
+                            int spaceIndex = word.IndexOf(' ');
+                            if (spaceIndex == -1)
+                            {
+                                tagg = word.Substring(startIndex + 1, endIndex - startIndex - 1);
+                            }
+                            else
+                            {
+                                tagg = word.Substring(startIndex + 1, spaceIndex - startIndex - 1);
+                                attribut = word.Substring(spaceIndex + 1, endIndex - spaceIndex - 1);
+                                allAttribut = attribut.Split('=');
+                                key = allAttribut[0];
+                                value = allAttribut[1].Trim('\"');
+                            }
+                            TagName.TryParse(tagg, out tName);
+
+
                             if (Enum.IsDefined(typeof(TagName), tName))
                             {
-                               
-                                child = new Tag(tName);
 
+                                child = new Tag(tName);
+                                if (spaceIndex != -1)
+                                {
+                                    child.SetAttribute(key, value);
+                                }
+                                child.isSelfClosingg = true;
                                 rootTag.AddChild(child);
-                                rootTag = child;
-                                //Console.WriteLine(rootTag.TagName);
-                                
+                                //Console.WriteLine(word);
                             }
                         }
+
+
+
+                        //////////////////////////////////////////////////////
+                        /*      TagName.TryParse(word, out tName);
+                                  if (Enum.IsDefined(typeof(TagName), tName))
+                                  {
+
+                                      child = new Tag(tName);
+
+                                      rootTag.AddChild(child);
+                                      rootTag = child;
+                                      //Console.WriteLine(rootTag.TagName);
+
+                                  }
+                              }*/
                         readText = readText.Remove(0, endIndex + 1);
 
                     }

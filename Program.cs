@@ -39,9 +39,9 @@ namespace HtmlRender
 
            
            
-            /*
+            
             ATag link = new ATag("http://www.expertnetwork.eu/");
-            link.innerText = "Link catre Expert Network";*/
+            link.innerText = "Link catre Expert Network";
             html.AddChild(body);
             html.AddChild(head1);
             html.AddChild(head2);
@@ -57,7 +57,7 @@ namespace HtmlRender
             div.AddChild(h1);
             div.AddChild(p1);
             p1.AddChild(div2);//ok
-            //div.AddChild(link);
+            div.AddChild(link);
             h1.AddChild(font);
            // body.AddChild(input);
            // input.SetAttribute("type","text");
